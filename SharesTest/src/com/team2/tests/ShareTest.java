@@ -34,7 +34,7 @@ public class ShareTest {
 	
 	@Test
 	public void testPositiveGetWeekPercentChange() {
-		populateApiData("428", MONDAY, "400");
+		populateApiData(YahooFinanceAPI.StockSymbol.BP, "428", MONDAY, "400");
 		
 		int rounded = Math.round(share.getWeekPercentChange());
 		
@@ -43,7 +43,7 @@ public class ShareTest {
 	
 	@Test
 	public void testNegativeGetWeekPercentChange() {		
-		populateApiData("379", MONDAY, "400");
+		populateApiData(YahooFinanceAPI.StockSymbol.BP, "379", MONDAY, "400");
 		
 		int rounded = Math.round(share.getWeekPercentChange());
 		
@@ -52,7 +52,7 @@ public class ShareTest {
 	
 	@Test
 	public void testZeroGetWeekPercentChange() {		
-		populateApiData("400", MONDAY, "400");
+		populateApiData(YahooFinanceAPI.StockSymbol.BP, "400", MONDAY, "400");
 		
 		int rounded = Math.round(share.getWeekPercentChange());
 		
@@ -61,12 +61,12 @@ public class ShareTest {
 	
 	
 	
-	public void populateApiData(String price, String date, String dateOpenPrice)
+	public static void populateApiData(YahooFinanceAPI.StockSymbol symbol, String price, String date, String dateOpenPrice)
 	{
-		YahooFinanceAPI.stockData[YahooFinanceAPI.StockSymbol.BP.ordinal()][YahooFinanceAPI.DataType.ASK.ordinal()] = price;
-		YahooFinanceAPI.stockData[YahooFinanceAPI.StockSymbol.BP.ordinal()][YahooFinanceAPI.DataType.BID.ordinal()] = price;
-		YahooFinanceAPI.historicData[YahooFinanceAPI.StockSymbol.BP.ordinal()][0][YahooFinanceAPI.HistoricDataType.DATE.ordinal()] = date;
-		YahooFinanceAPI.historicData[YahooFinanceAPI.StockSymbol.BP.ordinal()][0][YahooFinanceAPI.HistoricDataType.OPEN.ordinal()] = dateOpenPrice;
+		YahooFinanceAPI.stockData[symbol.ordinal()][YahooFinanceAPI.DataType.ASK.ordinal()] = price;
+		YahooFinanceAPI.stockData[symbol.ordinal()][YahooFinanceAPI.DataType.BID.ordinal()] = price;
+		YahooFinanceAPI.historicData[symbol.ordinal()][0][YahooFinanceAPI.HistoricDataType.DATE.ordinal()] = date;
+		YahooFinanceAPI.historicData[symbol.ordinal()][0][YahooFinanceAPI.HistoricDataType.OPEN.ordinal()] = dateOpenPrice;
 	}
 	
 }
