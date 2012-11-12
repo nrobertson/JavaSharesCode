@@ -77,6 +77,13 @@ public class ShareTest {
 		assertEquals(rounded, 0);
 	}
 	
+	@Test (expected = DataUnavailableException.class)
+	public void testNoConnection() throws DataUnavailableException 
+	{
+		//Don't populate API with data to simulate no data
+		share.getWeekPercentChange();
+	}
+	
 	
 	
 	public static void populateApiData(YahooFinanceAPI.StockSymbol symbol, String price, String date, String dateOpenPrice)
