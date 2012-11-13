@@ -38,10 +38,6 @@ public class ShareTest {
 	public void testPositiveGetWeekPercentChange() {
 		populateApiData(YahooFinanceAPI.StockSymbol.BP, "428", MONDAY, "400");
 		
-		testFunction(7);
-	}
-
-	private void testFunction(int expectedValue) {
 		int rounded1=0;
 		try {
 			rounded1 = Math.round(share.getWeekPercentChange());
@@ -50,7 +46,7 @@ public class ShareTest {
 			e.printStackTrace();
 		}
 		
-		assertEquals(rounded1, expectedValue);
+		assertEquals(rounded1, 7);
 	}
 	
 	@Test
