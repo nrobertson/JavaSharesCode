@@ -11,7 +11,7 @@ import com.example.shares.*;
 
 public class ShareTest {
 
-	static final String MONDAY = "2012-11-05"; 
+	static final String MONDAY = "2012-11-12"; 
 	private Share share;
 	
 	
@@ -28,9 +28,9 @@ public class ShareTest {
 		Calendar cal = Calendar.getInstance();
 		Calendar cal2 = Share.setCalendarToLastMonday(Calendar.getInstance());
 		
-		cal.set(2012, Calendar.NOVEMBER, 5);
+		cal.set(2012, Calendar.NOVEMBER, 12);
 		
-		//assertEquals(cal2, cal);
+		assertEquals(cal2, cal);
 		assertEquals(cal2.get(Calendar.DAY_OF_WEEK), Calendar.MONDAY);
 	}
 	
@@ -38,7 +38,7 @@ public class ShareTest {
 	public void testPositiveGetWeekPercentChange() {
 		populateApiData(YahooFinanceAPI.StockSymbol.BP, "428", MONDAY, "400");
 		
-		int rounded1=7;
+		int rounded1=0;
 		try {
 			rounded1 = Math.round(share.getWeekPercentChange());
 		} catch (DataUnavailableException e) {
@@ -53,7 +53,7 @@ public class ShareTest {
 	public void testNegativeGetWeekPercentChange() {		
 		populateApiData(YahooFinanceAPI.StockSymbol.BP, "379", MONDAY, "400");
 		
-		int rounded2=-5;
+		int rounded2=0;
 		try {
 			rounded2 = Math.round(share.getWeekPercentChange());
 		} catch (DataUnavailableException e) {
@@ -86,12 +86,19 @@ public class ShareTest {
 		share.getWeekPercentChange();
 	}
 	
-	//@Test (expected = DataUnavailableException.class)
-	//public void testZeroMondayPrice() throws DataUnavailableException
-	//{
-	//	populateApiData(YahooFinanceAPI.StockSymbol.BP, "1", MONDAY ,"0");
-	//	share.getWeekPercentChange();
-	//}
+	@Test (expected = DataUnavailableException.class)
+	public void testZeroMondayPrice() throws DataUnavailableException
+	{
+		populateApiData(YahooFinanceAPI.StockSymbol.BP, "1", MONDAY ,"0");
+		share.getWeekPercentChange();
+	}
+	//Test b, testing to check that an exception is thrown when the current price is 0
+	@Test (expected = DataUnavailableException.class)
+	public void testZeroCurrentPrice() throws DataUnavailableException
+	{
+		populateApiData(YahooFinanceAPI.StockSymbol.BP, "0", MONDAY ,"1");
+		share.getWeekPercentChange();
+	}
 	
 	
 	
