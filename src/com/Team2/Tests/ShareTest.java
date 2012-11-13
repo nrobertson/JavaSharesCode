@@ -40,47 +40,19 @@ public class ShareTest {
 		
 		testFunction(7);
 	}
-
-	private void testFunction(int expectedValue) {
-		int rounded1=0;
-		try {
-			rounded1 = Math.round(share.getWeekPercentChange());
-		} catch (DataUnavailableException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		assertEquals(rounded1, expectedValue);
-	}
 	
 	@Test
 	public void testNegativeGetWeekPercentChange() {		
 		populateApiData(YahooFinanceAPI.StockSymbol.BP, "379", MONDAY, "400");
 		
-		int rounded2=0;
-		try {
-			rounded2 = Math.round(share.getWeekPercentChange());
-		} catch (DataUnavailableException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		assertEquals(rounded2, -5);
+		testFunction(-5);
 	}
 	
 	@Test
 	public void testZeroGetWeekPercentChange() {		
 		populateApiData(YahooFinanceAPI.StockSymbol.BP, "400", MONDAY, "400");
 		
-		int rounded3=0;
-		try {
-			rounded3 = Math.round(share.getWeekPercentChange());
-		} catch (DataUnavailableException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		assertEquals(rounded3, 0);
+		testFunction(0);
 	}
 	
 	@Test (expected = DataUnavailableException.class)
@@ -167,6 +139,18 @@ public class ShareTest {
 		populateApiData(YahooFinanceAPI.StockSymbol.BP, "99", MONDAY, "100");
 		
 		testFunction(-1);
+	}
+	
+	private void testFunction(int expectedValue) {
+		int rounded1=0;
+		try {
+			rounded1 = Math.round(share.getWeekPercentChange());
+		} catch (DataUnavailableException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		assertEquals(rounded1, expectedValue);
 	}
 	
 	public static void populateApiData(YahooFinanceAPI.StockSymbol symbol, String price, String date, String dateOpenPrice)
