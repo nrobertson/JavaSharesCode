@@ -86,12 +86,14 @@ public class ShareTest {
 		share.getWeekPercentChange();
 	}
 	
+	//Test e , testing to check that an exception is thrown when Mondays open is 0
 	@Test (expected = DataUnavailableException.class)
 	public void testZeroMondayPrice() throws DataUnavailableException
 	{
 		populateApiData(YahooFinanceAPI.StockSymbol.BP, "1", MONDAY ,"0");
 		share.getWeekPercentChange();
 	}
+	
 	//Test b, testing to check that an exception is thrown when the current price is 0
 	@Test (expected = DataUnavailableException.class)
 	public void testZeroCurrentPrice() throws DataUnavailableException
@@ -100,7 +102,68 @@ public class ShareTest {
 		share.getWeekPercentChange();
 	}
 	
+	//Test j, testing to check that an exception is thrown if there is a loss of more than 100%
+	@Test (expected= DataUnavailableException.class)
+	public void testFallmorethan100() throws DataUnavailableException
+	{
+		populateApiData(YahooFinanceAPI.StockSymbol.EXPN, "-2", MONDAY, "200");
+		share.getWeekPercentChange();
+	}
+	//Test c, testing to check that an exception is thrown if the current price is a negative value
+	@Test (expected= DataUnavailableException.class)
+	public void testNegativeCurrentPrice() throws DataUnavailableException
+	{
+		populateApiData(YahooFinanceAPI.StockSymbol.EXPN, "-1", MONDAY, "100");
+		share.getWeekPercentChange();
+	}
 	
+	//Test k, testing to check that an exception is thrown if the current price is 0
+	@Test (expected= DataUnavailableException.class)
+	public void testCurrent0() throws DataUnavailableException
+	{
+		populateApiData(YahooFinanceAPI.StockSymbol.EXPN, "0", MONDAY, "1");
+		share.getWeekPercentChange();
+	}
+	
+	//Test f, testing to check that an exception is thrown if the monday price is 0
+	@Test (expected= DataUnavailableException.class)
+	public void testMonday0value() throws DataUnavailableException
+	{
+		populateApiData(YahooFinanceAPI.StockSymbol.EXPN, "1", MONDAY, "0");
+		share.getWeekPercentChange();
+	}
+	
+	//Test a,d and h. Testing to check that 0% is returned when the current price and the monday price both equal each other
+	@Test
+	public void testZeroReturnValue(){		
+		populateApiData(YahooFinanceAPI.StockSymbol.BP, "1", MONDAY, "1");
+		
+		testFunction(0);
+	}
+	
+	//Test i. Testing to check that a 1% rise returned when the current price is 1% greater than the monday value
+	@Test
+	public void testRiseReturnValue(){		
+		populateApiData(YahooFinanceAPI.StockSymbol.BP, "101", MONDAY, "100");
+		
+		testFunction(1);
+	}
+	
+	//Test g, Testing to check that a 99% fall is returned when the current price is 99% less than the Monday value 
+	@Test
+	public void testFallReturnValue(){		
+		populateApiData(YahooFinanceAPI.StockSymbol.BP, "1", MONDAY, "100");
+		
+		testFunction(-99);
+	}
+	
+	//Test l,Testing to check that a 1% fall is returned when the current price is 1% less than the Monday value 
+	@Test
+	public void testFallReturnValue1(){		
+		populateApiData(YahooFinanceAPI.StockSymbol.BP, "99", MONDAY, "100");
+		
+		testFunction(-1);
+	}
 	
 	public static void populateApiData(YahooFinanceAPI.StockSymbol symbol, String price, String date, String dateOpenPrice)
 	{
