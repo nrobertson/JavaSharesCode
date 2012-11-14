@@ -2,6 +2,7 @@ package com.Team2.Tests;
 
 import static org.junit.Assert.*;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -49,6 +50,12 @@ public class PortfolioTest {
 		assertEquals(change[2], "HSBC: unavailable");
 	}
 	
+	@After
+	public void teardown()
+	{
+		YahooFinanceAPI.stockData = null;
+		YahooFinanceAPI.historicData = null;
+	}
 	
 
 }

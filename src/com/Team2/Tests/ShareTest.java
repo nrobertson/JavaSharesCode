@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.util.Calendar;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -159,6 +160,14 @@ public class ShareTest {
 		YahooFinanceAPI.stockData[symbol.ordinal()][YahooFinanceAPI.DataType.BID.ordinal()] = price;
 		YahooFinanceAPI.historicData[symbol.ordinal()][0][YahooFinanceAPI.HistoricDataType.DATE.ordinal()] = date;
 		YahooFinanceAPI.historicData[symbol.ordinal()][0][YahooFinanceAPI.HistoricDataType.OPEN.ordinal()] = dateOpenPrice;
+	}
+	
+	@After
+	public void tearDown()
+	{
+	YahooFinanceAPI.stockData = null;
+	YahooFinanceAPI.historicData = null;
+	share = null;
 	}
 	
 }
